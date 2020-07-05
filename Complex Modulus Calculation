@@ -1,0 +1,49 @@
+import numpy as np
+import math
+from mpmath import gamma
+
+# Datos 
+
+pi = math.pi
+k = 1.3806488*10**-23  #Constante de Boltzmann (J/K)
+T = 297.5          #Temperatura del laboratorio (K)
+a = 400*10**(-9)     #Radio de la sonda (m) 
+
+#Inicializo los vectores
+
+G = np.zeros(len(columna1))
+m = np.zeros(len(columna1))
+w = np.zeros(len(columna1))
+G1 = np.zeros(len(columna1))
+G2 = np.zeros(len(columna1))
+eta = np.zeros(len(columna1))
+
+
+#Bucle para calcular las correspondientes magnitudes a cada pareja de datos
+
+for i in range(len(columna1)-1):
+    
+    
+    
+    # calculo la pendiente de la representación doble logarítmica como m = log10[f(x1)/f(x0)]/log10[x1/x0]
+    
+    m[i] = math.log10(data[i+1,1]/data[i,1])/math.log10(data[i+1,0]/data[i,0])
+    
+    
+    # calculo el módulo complejo (multiplico en el denominador por 10^-12 al estar el MSD en micron^2)
+    
+    G[i] = (k*T)/(pi*a*10**(-12)*columna2[i]*float(gamma(m[i] + 1)))
+    
+    
+    # calculo la frecuencia
+    
+    w[i] = (2*pi)/columna1[i]
+    
+    # calculo G1 y G2
+    
+    G1[i] = G[i]*math.cos(pi*m[i]/2.)
+    G2[i] = G[i]*math.sin(pi*m[i]/2.)
+    
+    # calculo la viscosidad como 
+    eta[i]=G[i]/w[i]
+    
