@@ -1,0 +1,26 @@
+import numpy as np
+
+# Funcion para la lectura de un fichero
+
+def readinputdata(filename):
+    
+       fichero=open(filename,'r')
+       f=[]
+       line='0'
+        
+       while len(line)>0:
+        line = np.array(fichero.readline().split()).astype(float)
+        
+        if len(line) > 0 :
+            f.append(line)
+            
+       fichero.close()
+    
+       return np.array(f)
+    
+# Entrada de Datos
+ 
+data = readinputdata("Des04Lx11Novdat_MR.dat") #Des04Lx11Novdat_MR.dat fichero de entrada
+ 
+columna1 = data[:,0]
+columna2 = data[:,1]
