@@ -1,0 +1,26 @@
+# importar todas las funciones de pylab
+from pylab import *
+
+# Gráfica
+import matplotlib.pyplot as plt
+from matplotlib.pyplot import figure
+figure(num=None, figsize=(8, 6), dpi=80, facecolor='w', edgecolor='k')
+plt.rc('xtick', labelsize=15) 
+plt.rc('ytick', labelsize=15) 
+
+plt.xlabel('\u03C9 (rad/s)', fontsize=15)
+plt.ylabel("G', G''(\u03C9) (Pa)", fontsize=15)
+plt.title("G' y G'' frente a la frecuencia \u03C9" , fontsize = 15 )
+plt.xscale('log')
+plt.yscale('log')
+
+plt.grid(True, which="both")
+
+
+plt.plot(w, G1, 'b.', label = "G'(\u03C9)")
+plt.plot(w, G2, 'r.', label = "G''(\u03C9)")
+legend = plt.legend(title = 'T: 297.5 K, a: 400 nm', loc = "lower right", fontsize = 15)
+legend.get_title().set_fontsize('15')
+
+plt.savefig("glicerina.jpg")
+    
