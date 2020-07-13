@@ -5,18 +5,19 @@ from mpmath import gamma
 # Datos 
 
 pi = math.pi
-k = 1.3806488*10**-23  #Constante de Boltzmann (J/K)
-T = 297.5          #Temperatura del laboratorio (K)
-a = 400*10**(-9)     #Radio de la sonda (m) 
+k = 1.3806488*10**-23   #Constante de Boltzmann (J/K)
+T = 297.5               #Temperatura del laboratorio (K) 24ºC
+a = 200*10**(-9)        #Radio de la sonda (m) 
 
 #Inicializo los vectores
 
-G = np.zeros(len(columna1))
-m = np.zeros(len(columna1)) #pendiente alpha
-w = np.zeros(len(columna1))
-G1 = np.zeros(len(columna1))
-G2 = np.zeros(len(columna1))
-eta = np.zeros(len(columna1))
+G = np.zeros(len(columna1)) #Vector para el módulo comlejo
+m = np.zeros(len(columna1)) #Vector para la pendiente alfa
+s = np.zeros(len(columna1)) #Vector para las frecuencias s
+G1 = np.zeros(len(columna1)) #Vector para la parte real G'
+G2 = np.zeros(len(columna1)) #Vector para la parte imaginaria G''
+pendiente = np.zeros(len(columna1)) #Vector para calcular C*MSD
+
 
 
 #Bucle para calcular las correspondientes magnitudes a cada pareja de datos
@@ -25,25 +26,27 @@ for i in range(len(columna1)-1):
     
     
     
-    # calculo la pendiente alpha de la representación doble logarítmica como m = log10[f(x1)/f(x0)]/log10[x1/x0]
+    # calculo la pendiente de la representación doble logarítmica como m(x0) = log10[f(x1)/f(x0)]/log10[x1/x0]
     
     m[i] = math.log10(data[i+1,1]/data[i,1])/math.log10(data[i+1,0]/data[i,0])
+   
+   
+    #print(m[i])
+    # calculo el módulo complejo (multiplico en el denominador por 10^-12 al estar el MSD en micron^2)
     
+    #gamma = 0.457*(1+m[i])**2 - 1.36*(m[i]+1) + 1.90
+    G[i] = (k*T) / (pi*a*10**(-12)*columna2[i]*float(gamma(m[i]+1)))
     
-    # calculo el módulo complejo (multiplico en el denominador por 10^-12 al estar el MSD en micron^2): K*T/pi*a*MSA*10^-12*función gamma
-    
-    G[i] = (k*T)/(pi*a*10**(-12)*columna2[i]*float(gamma(m[i] + 1)))
-    
-    
-    # calculo la frecuencia con 2Pi/t 
-    
-    w[i] = (2*pi)/columna1[i]
+    # calculo la frecuencia
+    s[i] = 1./columna1[i]
     
     # calculo G1 y G2
-    
     G1[i] = G[i]*math.cos(pi*m[i]/2.)
     G2[i] = G[i]*math.sin(pi*m[i]/2.)
     
-    # calculo la viscosidad como 
-    eta[i]=G[i]/w[i]
+    # calculo MSD*C = MSD*pi*a/kT
+    pendiente[i] = (pi*a*columna2[i]*10**-12)/(k*T)
+   
+    #FIN   
+    
     
