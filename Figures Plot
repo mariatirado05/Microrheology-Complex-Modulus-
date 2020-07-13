@@ -1,26 +1,76 @@
 # importar todas las funciones de pylab
 from pylab import *
-
-# Gráfica
+import numpy as np
+import random
 import matplotlib.pyplot as plt
 from matplotlib.pyplot import figure
+
+
+# Características de la figura
 figure(num=None, figsize=(8, 6), dpi=80, facecolor='w', edgecolor='k')
 plt.rc('xtick', labelsize=15) 
 plt.rc('ytick', labelsize=15) 
-
+ 
+# Ejes, título y escala
 plt.xlabel('\u03C9 (rad/s)', fontsize=15)
-plt.ylabel("G', G''(\u03C9) (Pa)", fontsize=15)
-plt.title("G' y G'' frente a la frecuencia \u03C9" , fontsize = 15 )
+plt.ylabel("G'(\u03C9 ), G''(\u03C9) (Pa)", fontsize=15)
+plt.title("G'(\u03C9 ) y G''(\u03C9) frente a la frecuencia \u03C9 " , fontsize = 15 )
 plt.xscale('log')
 plt.yscale('log')
 
+
+# Se establece una rejilla
 plt.grid(True, which="both")
 
+# Se plotean las dos funciones
+plt.plot(s, G1, 'b.',  mfc='none', label = "G'(\u03C9)")
+plt.plot(s, G2, 'r.',  mfc='none', label = "G''(\u03C9)")
 
-plt.plot(w, G1, 'b.', label = "G'(\u03C9)")
-plt.plot(w, G2, 'r.', label = "G''(\u03C9)")
-legend = plt.legend(title = 'T: 297.5 K, a: 400 nm', loc = "lower right", fontsize = 15)
+
+
+# Se muestra una leyenda
+legend = plt.legend(title = 'T: 297.5 K, a: 200 nm', loc ='upper left', fontsize = 15)
 legend.get_title().set_fontsize('15')
 
-plt.savefig("glicerina.jpg")
+# Se guarda la figura
+plt.savefig("ComponentesXantano.jpg")
+
+-----------------------------------------------------------------------------------------------------
+
+# importar todas las funciones de pylab
+from pylab import *
+import numpy as np
+import random
+import matplotlib.pyplot as plt
+from matplotlib.pyplot import figure
+
+# Características de la figura
+figure(num=None, figsize=(8, 6), dpi=80, facecolor='w', edgecolor='k')
+plt.rc('xtick', labelsize=17) 
+plt.rc('ytick', labelsize=17) 
+
+# Ejes, título y escala
+plt.xlabel('t (s)', fontsize=18)
+plt.ylabel(r'$ \frac{a\pi}{kT}\left<\Delta r^2(t)\right>$ $(Pa^{-1}$)', fontsize=18)
+plt.title(r'$ \frac{a\pi}{kT} \left<\Delta r^2(t)\right>$ $(Pa^{-1}$) frente a t(s)' , fontsize = 15 )
+plt.xscale('log')
+plt.yscale('log')
+
+# Se ajusta un polinomio y se muestra en pantalla
+#p = np.polyfit(columna1, pendiente, 1)
+
+#print(p)
+
+# Se establece una rejilla
+plt.grid(True, which="both")
+
+# Se plotea la función
+plt.plot(columna1, pendiente, 'b.',  mfc='none', label = r'$ \frac{a\pi}{kT} \left<\Delta r^2(t)\right>$  $(Pa^{-1})$')
+
+# Se muestra una leyenda
+legend = plt.legend(title = 'T: 297.5 K, a: 200 nm', loc = "lower right", fontsize = '17')
+legend.get_title().set_fontsize('17')
+
+#Se guarda la figura
+plt.savefig("TiempoAgua.jpg")
     
